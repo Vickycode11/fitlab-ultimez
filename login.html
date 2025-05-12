@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Login & Register</title>
+
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Google Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;700&display=swap" rel="stylesheet">
+
+  <!-- AOS CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet">
+
+  <style>
+    body {
+      font-family: 'Roboto', sans-serif;
+      background: url('./assets/images/home.jpg') no-repeat center center/cover;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+  
+    .auth-box {
+      background: rgba(0, 0, 0, 0.6); /* transparent black background */
+      border-radius: 15px;
+      padding: 40px;
+      max-width: 420px;
+      width: 100%;
+      box-shadow: 0 0 25px rgba(0, 0, 0, 0.5);
+      color: #fff;
+    }
+  
+    .auth-box h2 {
+      font-weight: 700;
+      margin-bottom: 30px;
+      color: #fff;
+    }
+  
+    .form-control {
+      background-color: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      color: #fff;
+    }
+  
+    .form-control::placeholder {
+      color: #ccc;
+    }
+  
+    .form-control:focus {
+      box-shadow: none;
+      border-color: #fff;
+      background-color: rgba(255, 255, 255, 0.1);
+      color: #fff;
+    }
+  
+    .btn-dark {
+      background-color: #fff;
+      color: #000;
+      border: none;
+    }
+  
+    .btn-dark:hover {
+      background-color: #ddd;
+      color: #000;
+    }
+  
+    .footer-text {
+      font-size: 0.9rem;
+      color: #aaa;
+    }
+  
+    .toggle-btn {
+      background: none;
+      border: none;
+      color: #00aaff;
+      cursor: pointer;
+      padding: 0;
+    }
+  </style>
+  
+</head>
+<body>
+
+  <!-- Auth Box -->
+  <div class="auth-box" data-aos="zoom-in">
+
+    <!-- Login Form -->
+    <div id="loginFormWrapper">
+      <h2 class="text-center">Login to Ultimez Gym</h2>
+      <form id="loginForm">
+        <div class="mb-3">
+          <input type="email" class="form-control" placeholder="Email" required id="loginEmail">
+        </div>
+        <div class="mb-3">
+          <input type="password" class="form-control" placeholder="Password" required id="loginPassword">
+        </div>
+        <button type="submit" class="btn btn-dark w-100">Login</button>
+      </form>
+      <p class="text-center mt-3 footer-text">
+        Don’t have an account? <button class="toggle-btn" onclick="showRegister()">Sign Up</button>
+      </p>
+    </div>
+
+    <!-- Sign Up Form -->
+    <div id="registerFormWrapper" style="display: none;">
+      <h2 class="text-center">Create Account</h2>
+      <form id="registerForm">
+        <div class="mb-3">
+          <input type="text" class="form-control" placeholder="Full Name" required id="regName">
+        </div>
+        <div class="mb-3">
+          <input type="email" class="form-control" placeholder="Email" required id="regEmail">
+        </div>
+        <div class="mb-3">
+          <input type="tel" class="form-control" placeholder="Phone Number" required id="regPhone">
+        </div>
+        <div class="mb-3">
+          <input type="password" class="form-control" placeholder="Password" required id="regPassword">
+        </div>
+        <button type="submit" class="btn btn-dark w-100">Register</button>
+      </form>
+      <p class="text-center mt-3 footer-text">
+        Already have an account? <button class="toggle-btn" onclick="showLogin()">Login</button>
+      </p>
+    </div>
+
+  </div>
+
+  <!-- jQuery, Bootstrap JS, and AOS -->
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+
+  <script>
+    AOS.init({ duration: 1000, once: true });
+  
+    const backendBaseURL = 'http://localhost:5000'; // Adjust if needed
+  
+    function showRegister() {
+      $('#loginFormWrapper').fadeOut(200, function () {
+        $('#registerFormWrapper').fadeIn(300);
+      });
+    }
+  
+    function showLogin() {
+      $('#registerFormWrapper').fadeOut(200, function () {
+        $('#loginFormWrapper').fadeIn(300);
+      });
+    }
+  
+    // LOGIN
+    $('#loginForm').on('submit', async function (e) {
+      e.preventDefault();
+  
+      const email = $('#loginEmail').val();
+      const password = $('#loginPassword').val();
+  
+      try {
+        const res = await fetch(`${backendBaseURL}/api/auth/login`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email, password })
+        });
+  
+        const data = await res.json();
+  
+        if (res.ok) {
+          alert('Login successful!');
+          // Save token or redirect
+          localStorage.setItem('token', data.token);
+          // Redirect to index.html page
+          window.location.href = "index.html";
+        } else {
+          alert(data.message || 'Login failed');
+        }
+      } catch (err) {
+        console.error(err);
+        alert('Something went wrong');
+      }
+    });
+  
+    // REGISTER
+    $('#registerForm').on('submit', async function (e) {
+      e.preventDefault();
+  
+      const name = $('#regName').val();
+      const email = $('#regEmail').val();
+      const phone = $('#regPhone').val();
+      const password = $('#regPassword').val();
+  
+      try {
+        const res = await fetch(`${backendBaseURL}/api/auth/register`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ name, email, phone, password })
+        });
+  
+        const data = await res.json();
+  
+        if (res.ok) {
+          alert('Registration successful!');
+          showLogin();
+        } else {
+          alert(data.message || 'Registration failed');
+        }
+      } catch (err) {
+        console.error(err);
+        alert('Something went wrong');
+      }
+    });
+  </script>
+  
+</body>
+</html>

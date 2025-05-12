@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Exclusive Offers - Ultimez Gym</title>
+
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
+
+  <!-- AOS Animation CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      scroll-behavior: smooth;
+    }
+
+    .offer-header {
+      background: url('./assets/images/home.jpg') center center/cover no-repeat;
+      height: 400px;
+      color: white;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 0 20px;
+    }
+
+    .offer-header h1 {
+      font-size: 3rem;
+      font-weight: bold;
+    }
+
+    .offer-header p {
+      font-size: 1.2rem;
+    }
+
+    .offer-section {
+      padding: 50px 0;
+    }
+
+    .offer-card {
+      background-color: #fff;
+      border-radius: 12px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      margin-bottom: 30px;
+      overflow: hidden;
+      transition: transform 0.3s;
+    }
+
+    .offer-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+    }
+
+    .offer-card img {
+      width: 100%;
+      height: 250px;
+      object-fit: cover;
+    }
+
+    .offer-card .card-body {
+      padding: 25px;
+      text-align: center;
+    }
+
+    .offer-card h3 {
+      font-size: 1.8rem;
+      color: #333;
+    }
+
+    .offer-card p {
+      color: #555;
+      font-size: 1.1rem;
+    }
+
+    .offer-card .offer-price {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: #ff5e14;
+      margin-top: 15px;
+    }
+
+    .offer-card .offer-duration {
+      font-size: 1.1rem;
+      color: #777;
+    }
+
+    .offer-card .offer-discount {
+      font-size: 1.1rem;
+      color: #28a745;
+      margin-top: 10px;
+      font-weight: 600;
+    }
+
+    .primary-btn {
+      background-color: #ff5e14;
+      color: #fff;
+      padding: 10px 20px;
+      border-radius: 5px;
+      text-decoration: none;
+      font-weight: 600;
+      display: inline-block;
+      margin-top: 20px;
+    }
+
+    .primary-btn:hover {
+      background-color: #cc4a12;
+    }
+
+    /* Responsive Fix */
+    @media (max-width: 768px) {
+      .offer-card {
+        margin-bottom: 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Offer Header -->
+  <section class="offer-header">
+    <div>
+      <h1 data-aos="fade-down">Exclusive Offers Just for You</h1>
+      <p data-aos="fade-up">Choose the plan that suits your fitness goals and start today!</p>
+    </div>
+  </section>
+
+  <!-- Offers Section -->
+  <section class="offer-section container">
+    <h2 class="section-title text-center" data-aos="fade-right">Our Latest Offers</h2>
+    <div class="row">
+      <!-- Basic Plan -->
+      <div class="col-md-4 col-sm-6" data-aos="fade-up" data-aos-delay="100">
+        <div class="offer-card">
+          <img src="./assets/images/offer.png" alt="Basic Plan" />
+          <div class="card-body">
+            <h3>Basic Plan</h3>
+            <p>₹999/month</p>
+            <p>OFFER CODE BASIC123</p>
+            <p>Full gym access, Locker facility, No personal trainer, Timings: 2 hours/day.</p>
+            <div class="offer-price">₹999/month</div>
+            <div class="offer-duration">Monthly Subscription</div>
+            <div class="offer-discount">20% OFF for Full Payment: ₹799.20</div>
+            <a href="https://docs.google.com/forms/d/e/1FAIpQLSfPo_zBRbXRNWLWyjEqtJcPRTNT7kAJhw_IBNgn4zX1wUVWfw/viewform?usp=header" class="primary-btn">Enroll Now</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Standard Plan -->
+      <div class="col-md-4 col-sm-6" data-aos="fade-up" data-aos-delay="200">
+        <div class="offer-card">
+          <img src="./assets/images/offer.png" alt="Standard Plan" />
+          <div class="card-body">
+            <h3>Standard Plan</h3>
+            <p>₹3,499/3 months</p>
+            <p>OFFER CODE STD123</p>
+            <p>All Basic Plan features, Weight loss & gain classes, Timings: 3 hours/day.</p>
+            <div class="offer-price">₹3,499/3 months</div>
+            <div class="offer-duration">3-Month Subscription</div>
+            <div class="offer-discount">20% OFF for Full Payment: ₹2,799.20</div>
+            <a href="https://docs.google.com/forms/d/e/1FAIpQLSfPo_zBRbXRNWLWyjEqtJcPRTNT7kAJhw_IBNgn4zX1wUVWfw/viewform?usp=header" class="primary-btn">Enroll Now</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Premium Plan -->
+      <div class="col-md-4 col-sm-6" data-aos="fade-up" data-aos-delay="300">
+        <div class="offer-card">
+          <img src="./assets/images/offer.png" alt="Premium Plan" />
+          <div class="card-body">
+            <h3>Premium Plan</h3>
+            <p>₹7,500/6 months</p>
+            <p>OFFER CODE PREMIUM123</p>
+            <p>All Standard Plan features, Custom diet plan, No time restrictions.</p>
+            <div class="offer-price">₹7,500/6 months</div>
+            <div class="offer-duration">6-Month Subscription</div>
+            <div class="offer-discount">20% OFF for Full Payment: ₹6,000</div>
+            <a href="https://docs.google.com/forms/d/e/1FAIpQLSfPo_zBRbXRNWLWyjEqtJcPRTNT7kAJhw_IBNgn4zX1wUVWfw/viewform?usp=header" class="primary-btn">Enroll Now</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Elite Annual Plan -->
+      <div class="col-md-4 col-sm-6" data-aos="fade-up" data-aos-delay="400">
+        <div class="offer-card">
+          <img src="./assets/images/offer.png" alt="Elite Plan" />
+          <div class="card-body">
+            <h3>Elite Annual Plan</h3>
+            <p>₹15,999/year</p>
+            <p>OFFER CODE ANUAL123</p>
+            <p>All Premium Plan features, Supplementary & gym kit, No time restrictions.</p>
+            <div class="offer-price">₹15,999/year</div>
+            <div class="offer-duration">Annual Subscription</div>
+            <div class="offer-discount">20% OFF for Full Payment: ₹12,799.20</div>
+            <a href="https://docs.google.com/forms/d/e/1FAIpQLSfPo_zBRbXRNWLWyjEqtJcPRTNT7kAJhw_IBNgn4zX1wUVWfw/viewform?usp=header" class="primary-btn">Enroll Now</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Couple Plan -->
+      <div class="col-md-4 col-sm-6" data-aos="fade-up" data-aos-delay="500">
+        <div class="offer-card">
+          <img src="./assets/images/offer.png" alt="Couple Plan" />
+          <div class="card-body">
+            <h3>Couple Plan</h3>
+            <p>₹3,999/1 month</p>
+            <p>OFFER CODE COUPLE123</p>
+            <p>Exclusive offer for couples, Full gym access, Timings: 2 hours/day.</p>
+            <div class="offer-price">₹3,999/month</div>
+            <div class="offer-duration">Monthly Subscription</div>
+            <div class="offer-discount">20% OFF for Full Payment: ₹3,199.20</div>
+            <a href="https://docs.google.com/forms/d/e/1FAIpQLSfPo_zBRbXRNWLWyjEqtJcPRTNT7kAJhw_IBNgn4zX1wUVWfw/viewform?usp=header" class="primary-btn">Enroll Now</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer text-center bg-dark text-white py-3">
+    <p>&copy; 2025 Ultimez Gym. All rights reserved.</p>
+  </footer>
+
+  <!-- Bootstrap JS & AOS Script -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+  <script>
+    AOS.init();
+  </script>
+</body>
+</html>
