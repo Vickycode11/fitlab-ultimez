@@ -20,7 +20,7 @@
       scroll-behavior: smooth;
     }
     header {
-      background: url('./assets/images/base.png') center center/cover no-repeat fixed;
+      background: url('../assets/images/base.png') center center/cover no-repeat fixed;
       height: 100vh;
       color: white;
       text-align: center;
@@ -276,16 +276,34 @@
   </header>
 
   <!-- About Section -->
-  <section id="about" class="container py-5">
-    <h2 class="section-title" data-aos="fade-right">About Us</h2>
-    <p data-aos="fade-up">
-      Ultimez Gym has been a true force in the fitness world since its founding. Inspired by the legends of strength and dedication, Ultimez Gym was built as a place where serious fitness enthusiasts could train with purpose. Long before fitness became a trend, Ultimez Gym stood for hard work, real results, and a commitment to excellence. With carefully selected equipment and a relentless focus on progress, Ultimez Gym quickly became recognized as a destination for anyone serious about transforming their body and lifestyle.
-
-      In the spirit of the golden era of bodybuilding, Ultimez Gym continues to honor the dedication and passion of athletes and fitness icons. Today, Ultimez Gym has evolved to offer the latest innovations in fitness — from cutting-edge strength and cardio equipment to dynamic group classes like Yoga, HIIT, Zumba, and Spin, alongside elite personal training programs — all while maintaining its proud roots in weightlifting and strength development.
-      
-      Ultimez Gym is the preferred training ground for fitness enthusiasts, athletes, bodybuilders, and everyday individuals striving to become their best selves. Above all, Ultimez Gym remains committed to its ultimate mission: helping every member unleash their full potential and achieve lasting results.
+ <section id="about" style="background: linear-gradient(to right, #1a1a1a, #111111); padding: 80px 20px; font-family: 'Poppins', sans-serif;">
+  <div style="max-width: 1100px; margin: auto; background: #000000; padding: 40px 30px; border-radius: 16px; box-shadow: 0 10px 25px rgba(255, 46, 99, 0.3); border-left: 8px solid #ff2e63;" data-aos="fade-up">
+    
+    <h2 style="font-size: 42px; color: #ff2e63; font-weight: 900; text-align: center; margin-bottom: 2rem; text-transform: uppercase; letter-spacing: 2px;" data-aos="fade-right">
+      About Ultimez Gym
+    </h2>
+    
+    <p style="font-size: 18px; line-height: 1.9; color: #e0e0e0; text-align: justify; margin-top: 10px;" data-aos="fade-up">
+      <strong style="color: #ff2e63;">Ultimez Gym</strong> isn't just a gym — it's a lifestyle revolution. Forged from the fire of dedication, sweat, and strength, we’ve built a space for warriors of every level. Long before fitness became a fashion, Ultimez stood for real grit, muscle, and transformation.
     </p>
-  </section>
+    
+    <p style="font-size: 18px; line-height: 1.9; color: #e0e0e0; text-align: justify; margin-top: 20px;" data-aos="fade-up">
+      Rooted in the legacy of the golden bodybuilding era, we blend old-school discipline with new-school innovation — <span style="color: #17d4fc; font-weight: bold;">HIIT</span>, <span style="color: #17d4fc; font-weight: bold;">Strength Training</span>, <span style="color: #17d4fc; font-weight: bold;">Zumba</span>, <span style="color: #17d4fc; font-weight: bold;">Yoga</span> — all with next-gen equipment and elite trainers who push your limits.
+    </p>
+    
+    <p style="font-size: 18px; line-height: 1.9; color: #e0e0e0; text-align: justify; margin-top: 20px;" data-aos="fade-up">
+      Whether you’re an athlete, beginner, or bodybuilder — Ultimez Gym is your battleground. Step in for results, not excuses. We're here to help you unleash your power and build a version of you that’s unstoppable.
+    </p>
+
+    <div style="text-align: center; margin-top: 40px;" data-aos="zoom-in">
+      <a href="#contact" style="background-color: #ff2e63; color: #fff; padding: 14px 36px; font-size: 18px; font-weight: bold; border-radius: 50px; text-decoration: none; letter-spacing: 1px; box-shadow: 0 4px 10px rgba(255,46,99,0.4); transition: all 0.3s ease;">
+        Join the Revolution
+      </a>
+    </div>
+
+  </div>
+</section>
+
  <!-- Services Section -->
  <section id="services" class="parallax" style="background-image: url('../assets/images/breadcrumb-bg.jpg');">
   <div class="container">
@@ -407,17 +425,17 @@
     <h2 class="section-title" data-aos="fade-left">Meet Our Trainers</h2>
     <div class="row">
       <div class="col-md-4" data-aos="flip-left">
-        <img src="./assets/images/cbum.jpg" class="img-fluid rounded-circle mb-2" alt="Trainer 1">
+        <img src="../assets/images/cbum.jpg" class="img-fluid rounded-circle mb-2" alt="Trainer 1">
         <h5>Chris Bumstead</h5>
         <p>Certified Personal Trainer</p>
       </div>
       <div class="col-md-4" data-aos="flip-left" data-aos-delay="100">
-        <img src="./assets/images/ronnie1.jpg" class="img-fluid rounded-circle mb-2" alt="Trainer 2">
+        <img src="../assets/images/ronnie1.jpg" class="img-fluid rounded-circle mb-2" alt="Trainer 2">
         <h5>Ronnie Coleman</h5>
         <p>Strength Coach</p>
       </div>
       <div class="col-md-4" data-aos="flip-left" data-aos-delay="200">
-        <img src="./assets/images/ramon.jpeg" class="img-fluid rounded-circle mb-2" alt="Trainer 3">
+        <img src="../assets/images/ramon.jpeg" class="img-fluid rounded-circle mb-2" alt="Trainer 3">
         <h5>Ramon Dino</h5>
         <p>Group Fitness Expert</p>
       </div>
@@ -425,7 +443,7 @@
   </section>
 
   <!-- Contact Section -->
-  <section id="contact" class="parallax" style="background-image: url('./assets/images/banner-bg.jpg');">
+  <section id="contact" class="parallax" style="background-image: url('../assets/images/banner-bg.jpg');">
   <div class="container">
     <h2 class="section-title" data-aos="zoom-in">Contact Us</h2>
     <form class="row g-3" action="https://docs.google.com/forms/d/e/1FAIpQLSeV_hSh7nQW4IUWWDPWYPQOfTMF6cHgtKgIniYEBqK-A27-zw/viewform?usp=header" method="POST" target="_self" data-aos="fade-up">
