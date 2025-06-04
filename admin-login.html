@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Admin Login - Ultimez Gym</title>
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <style>
+    body {
+      background: url('./assets/images/home.jpg') center/cover no-repeat;
+      color: #fff;
+      font-family: 'Roboto', sans-serif;
+      height: 100vh;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .login-box {
+      background: rgba(0,0,0,0.8);
+      padding: 40px;
+      border-radius: 12px;
+      width: 360px;
+      box-shadow: 0 0 25px rgba(0,0,0,0.7);
+    }
+    .login-box h2 {
+      margin-bottom: 30px; font-weight: 700; text-align: center;
+    }
+    .form-control {
+      background: #222; border: 1px solid #444; color: #fff;
+    }
+    .form-control::placeholder { color: #bbb; }
+    .btn-primary {
+      background-color: #00aaff; border: none;
+    }
+    .btn-primary:hover { background-color: #008ecc; }
+  </style>
+</head>
+<body>
+
+  <div class="login-box">
+    <h2>Admin Login</h2>
+    <form id="adminLoginForm">
+      <div class="mb-3">
+        <input type="email" id="adminEmail" class="form-control" placeholder="Admin Email" required />
+      </div>
+      <div class="mb-3">
+        <input type="password" id="adminPassword" class="form-control" placeholder="Password" required />
+      </div>
+      <button type="submit" class="btn btn-primary w-100">Login as Admin</button>
+    </form>
+  </div>
+
+  <!-- Bootstrap JS Bundle -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    // Make sure this matches your backend PORT (default is 4000)
+    const backendBaseURL = 'http://localhost:4000';
+
+    document.getElementById('adminLoginForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const email = document.getElementById('adminEmail').value.trim();
+      const password = document.getElementById('adminPassword').value;
+
+      try {
+        const response = await fetch(`${backendBaseURL}/api/admin/login`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email, password }),
+        });
+        const data = await response.json();
+        if (response.ok && data.token) {
+          // Save token & redirect
+          localStorage.setItem('adminToken', data.token);
+          window.location.href = 'admin.html';
+        } else {
+          alert(data.error || data.message || 'Admin login failed');
+        }
+      } catch (err) {
+        console.error('Admin login error:', err);
+        alert('Something went wrong. Please try again.');
+      }
+    });
+  </script>
+
+</body>
+</html>
+  

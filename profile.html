@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>User Profile</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg-light: #e0eafc;
+      --bg-dark: #1e1e2f;
+      --card-light: rgba(255, 255, 255, 0.2);
+      --card-dark: rgba(0, 0, 0, 0.4);
+      --text-light: #333;
+      --text-dark: #f1f1f1;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: var(--bg-light);
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      transition: background 0.4s ease;
+      padding: 20px;
+    }
+
+    .dark-mode {
+      background: var(--bg-dark);
+      color: var(--text-dark);
+    }
+
+    .profile-container {
+      width: 100%;
+      max-width: 700px;
+      background: var(--card-light);
+      backdrop-filter: blur(12px);
+      border-radius: 20px;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.1);
+      padding: 40px 30px;
+      animation: fadeIn 1s ease-in-out;
+      color: var(--text-light);
+    }
+
+    .dark-mode .profile-container {
+      background: var(--card-dark);
+      color: var(--text-dark);
+    }
+
+    .profile-header {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    .profile-header img {
+      width: 100px;
+      height: 100px;
+      object-fit: cover;
+      border-radius: 50%;
+      border: 3px solid #fff;
+      margin-bottom: 15px;
+    }
+
+    .profile-info p {
+      font-size: 1.1rem;
+      margin: 12px 0;
+    }
+
+    .profile-info span {
+      font-weight: 500;
+    }
+
+    #logoutBtn {
+      margin-top: 20px;
+      width: 100%;
+      padding: 12px;
+      font-weight: 600;
+      font-size: 1rem;
+      background: #ff4b5c;
+      border: none;
+      border-radius: 8px;
+      color: #fff;
+    }
+
+    #logoutBtn:hover {
+      background: #e8434f;
+    }
+
+    #message {
+      margin-bottom: 20px;
+      font-weight: 500;
+      text-align: center;
+    }
+
+    .btn-edit, .btn-theme {
+      margin-top: 10px;
+      margin-right: 10px;
+    }
+
+    input[type="file"] {
+      display: none;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @media (max-width: 576px) {
+      .profile-container {
+        padding: 30px 20px;
+      }
+      .profile-info p {
+        font-size: 1rem;
+      }
+    }
+  </style>
+</head>
+<body id="body">
+
+  <div class="profile-container">
+    <div class="profile-header">
+      <img id="profileImage" src="https://via.placeholder.com/100" alt="Profile Image" />
+      <input type="file" id="imageUpload" accept="image/*" />
+      <br />
+      <button class="btn btn-sm btn-secondary btn-edit" onclick="document.getElementById('imageUpload').click()">Change Picture</button>
+      <button class="btn btn-sm btn-dark btn-theme" onclick="toggleTheme()">Toggle Theme</button>
+      <h2>👤 User Profile</h2>
+    </div>
+
+    <div id="message" class="alert alert-warning" style="display:none;"></div>
+
+    <div id="profile" style="display:none;">
+      <div class="profile-info">
+        <p><strong>Name:</strong> <span id="nameDisplay"></span></p>
+        <p><strong>Email:</strong> <span id="email"></span></p>
+        <p><strong>Phone:</strong> <span id="phoneDisplay"></span></p>
+        <p><strong>Gender:</strong> <span id="genderDisplay"></span></p>
+
+        <!-- Membership Info -->
+        <p><strong>Membership:</strong> <span id="membershipType">Not a member</span></p>
+        <p><strong>Start Date:</strong> <span id="membershipStart">N/A</span></p>
+        <p><strong>Expiry Date:</strong> <span id="membershipExpiry">N/A</span></p>
+        <p><strong>Status:</strong> <span id="membershipStatus">N/A</span></p>
+        <button class="btn btn-info w-100 mt-3" onclick="renewMembership()">Renew / Upgrade Membership</button>
+
+        <!-- Editable fields -->
+        <div class="form-group mt-3" id="editSection" style="display: none;">
+          <input type="text" id="nameInput" class="form-control mb-2" placeholder="Name" />
+          <input type="text" id="phoneInput" class="form-control mb-2" placeholder="Phone" />
+          <select id="genderInput" class="form-select">
+            <option value="">Select Gender</option>
+            <option value="Male">Male</option>
+            <option value="Female">Female</option>
+            <option value="Other">Other</option>
+          </select>
+          <button class="btn btn-success mt-3 w-100" onclick="saveChanges()">Save Changes</button>
+        </div>
+
+        <!-- <button class="btn btn-primary w-100 mt-3" onclick="toggleEdit()">Edit Profile</button> -->
+        <button id="logoutBtn">Logout</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const backendBaseURL = 'http://localhost:4000';
+
+    function parseJwt(token) {
+      try {
+        const base64Url = token.split('.')[1];
+        const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+        const jsonPayload = decodeURIComponent(atob(base64).split('').map(function (c) {
+          return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+        }).join(''));
+        return JSON.parse(jsonPayload);
+      } catch (e) {
+        return null;
+      }
+    }
+
+    function showMessage(msg) {
+      const messageEl = document.getElementById('message');
+      messageEl.textContent = msg;
+      messageEl.style.display = 'block';
+      document.getElementById('profile').style.display = 'none';
+    }
+
+    function showProfile(user) {
+      document.getElementById('nameDisplay').textContent = user.name || 'N/A';
+      document.getElementById('email').textContent = user.email || 'N/A';
+      document.getElementById('phoneDisplay').textContent = user.phone || 'N/A';
+      document.getElementById('genderDisplay').textContent = user.gender || 'N/A';
+
+      document.getElementById('nameInput').value = user.name || '';
+      document.getElementById('phoneInput').value = user.phone || '';
+      document.getElementById('genderInput').value = user.gender || '';
+
+      document.getElementById('message').style.display = 'none';
+      document.getElementById('profile').style.display = 'block';
+
+      // Optional: Load profile picture if available in backend
+      if (user.profileImage) {
+        document.getElementById('profileImage').src = user.profileImage;
+      }
+
+      loadMembership();
+    }
+
+    async function fetchProfile() {
+      const token = localStorage.getItem('token');
+      if (!token) return showMessage('You are not logged in.');
+
+      const decoded = parseJwt(token);
+      const userId = decoded && (decoded._id || decoded.id || decoded.userId);
+      if (!userId) return showMessage('Invalid token.');
+
+      try {
+        const res = await fetch(`${backendBaseURL}/api/users/${userId}`, {
+          headers: { 'Authorization': `Bearer ${token}` }
+        });
+
+        if (!res.ok) {
+          return showMessage('Failed to load profile.');
+        }
+
+        const user = await res.json();
+        window.currentUserId = user._id;
+        showProfile(user);
+      } catch (err) {
+        showMessage('Connection error.');
+      }
+    }
+
+    function toggleEdit() {
+      const section = document.getElementById('editSection');
+      section.style.display = section.style.display === 'none' ? 'block' : 'none';
+    }
+
+    async function saveChanges() {
+      const token = localStorage.getItem('token');
+      const name = document.getElementById('nameInput').value;
+      const phone = document.getElementById('phoneInput').value;
+      const gender = document.getElementById('genderInput').value;
+
+      try {
+        const res = await fetch(`${backendBaseURL}/api/users/${window.currentUserId}`, {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+          },
+          body: JSON.stringify({ name, phone, gender })
+        });
+
+        if (res.ok) {
+          const updated = await res.json();
+          showProfile(updated);
+          toggleEdit();
+        } else {
+          alert('Update failed');
+        }
+      } catch (err) {
+        alert('Update error');
+      }
+    }
+
+    function toggleTheme() {
+      document.body.classList.toggle('dark-mode');
+    }
+
+    document.getElementById('logoutBtn').addEventListener('click', () => {
+      localStorage.removeItem('token');
+      window.location.href = 'login.html';
+    });
+
+    // Handle profile picture change
+    document.getElementById('imageUpload').addEventListener('change', function () {
+      const file = this.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = function (e) {
+          document.getElementById('profileImage').src = e.target.result;
+          // Optionally: upload image to backend here
+        };
+        reader.readAsDataURL(file);
+      }
+    });
+
+    // MEMBERSHIP TRACKING FUNCTIONS
+
+    function loadMembership() {
+      const userId = window.currentUserId || 'guest';
+      const membershipKey = `membership_${userId}`;
+      const membershipData = localStorage.getItem(membershipKey);
+
+      if (membershipData) {
+        const membership = JSON.parse(membershipData);
+
+        document.getElementById('membershipType').textContent = membership.type || 'N/A';
+        document.getElementById('membershipStart').textContent = membership.startDate || 'N/A';
+        document.getElementById('membershipExpiry').textContent = membership.expiryDate || 'N/A';
+
+        const now = new Date();
+        const expiry = new Date(membership.expiryDate);
+        const status = expiry > now ? 'Active' : 'Expired';
+        document.getElementById('membershipStatus').textContent = status;
+      } else {
+        document.getElementById('membershipType').textContent = 'No membership';
+        document.getElementById('membershipStart').textContent = 'N/A';
+        document.getElementById('membershipExpiry').textContent = 'N/A';
+        document.getElementById('membershipStatus').textContent = 'N/A';
+      }
+    }
+
+    function renewMembership() {
+  const userId = window.currentUserId || 'guest';
+  const membershipKey = `membership_${userId}`;
+
+  const type = prompt('Enter membership type (Basic, Premium, VIP):', 'Premium');
+  if (!type) return alert('Membership type is required.');
+
+  const now = new Date();
+  const startDate = now.toISOString().split('T')[0];
+
+  // Clone 'now' so original is not mutated
+  const expiryDateObj = new Date(now);
+  expiryDateObj.setMonth(expiryDateObj.getMonth() + 1);
+  const expiryDate = expiryDateObj.toISOString().split('T')[0];
+
+  const membership = { type, startDate, expiryDate };
+
+  localStorage.setItem(membershipKey, JSON.stringify(membership));
+  alert(`Membership renewed/upgraded to ${type} for 1 month.`);
+
+  loadMembership();
+}
+
+    // On page load:
+    fetchProfile();
+
+  </script>
+</body>
+</html>
