@@ -26,9 +26,9 @@ connectDB()
   });
 
 // Middleware
-app.use(cors()); // Consider specifying origin in production
+app.use(cors()); // You can configure origin in production
 app.use(express.json());
-app.use(express.urlencoded({ extended: true })); // Optional for form data
+app.use(express.urlencoded({ extended: true }));
 
 // Log every request
 app.use((req, res, next) => {
@@ -36,7 +36,7 @@ app.use((req, res, next) => {
   next();
 });
 
-// Serve static files like images, screenshots
+// Serve static files
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 // API Routes
@@ -48,6 +48,11 @@ app.use('/api/memberships', membershipsRt);
 app.use('/api/prices', priceRoutes);
 app.use('/api/contact', contactRoutes);
 app.use('/api/payments', paymentRoutes);
+
+// ✅ Root route to prevent 404 on "/"
+app.get('/', (req, res) => {
+  res.send('✅ API is running. Welcome to FitLab!');
+});
 
 // 404 Handler
 app.use((req, res, next) => {
@@ -63,7 +68,7 @@ app.use((err, req, res, next) => {
   });
 });
 
-// Start the server on port 4000
+// Start the server
 const PORT = process.env.PORT || 4000;
 app.listen(PORT, () => {
   console.log(`🚀 Server running on http://localhost:${PORT}`);
